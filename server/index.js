@@ -5,8 +5,10 @@ const mongoose = require('mongoose');
 const User = require('./model');
 
 const app = express();
-app.use(cors());
-
+app.use(cors({
+  origin: ['https://mern-project-eight-psi.vercel.app/'], // Replace with your actual frontend domain
+  credentials: true
+}));
 
 app.use(express.json({ limit: '20mb' }));
 
