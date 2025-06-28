@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 
+
 function Step1({ formData, setFormData, nextStep }) {
   const [preview, setPreview] = useState(formData.photo || null);
   const [usernameCheck, setUsernameCheck] = useState(null);
+  const [checkingUsername, setCheckingUsername] = useState(false);
   const [errors, setErrors] = useState({});
   const [changePassword, setChangePassword] = useState(false);
 
@@ -27,11 +29,16 @@ function Step1({ formData, setFormData, nextStep }) {
 
     if (val.length >= 4 && val.length <= 20 && !val.includes(" ")) {
       try {
-        const res = await fetch(`http://localhost:10000/check-username?username=${val}`);
+        setCheckingUsername(true);
+        const res = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/check-username?username=${val}`
+        );
         const data = await res.json();
-        setUsernameCheck(data.available ? "Available" : "Taken");
+        setUsernameCheck(data.available ? "Available ✅" : "Taken ❌");
       } catch (err) {
-        setUsernameCheck("Error");
+        setUsernameCheck("Server error ❌");
+      } finally {
+        setCheckingUsername(false);
       }
     } else {
       setUsernameCheck(null);
@@ -80,13 +87,13 @@ function Step1({ formData, setFormData, nextStep }) {
     <div className="p-6 max-w-md mx-auto bg-white shadow-lg rounded-xl h-full">
       <h2 className="text-xl font-bold mb-4">Step 1: Personal Info</h2>
 
-      
+      {/* Photo Upload */}
       <label className="block font-medium">Profile Photo</label>
       <input type="file" onChange={handlePhoto} className="mt-1 mb-2" />
       {preview && <img src={preview} alt="preview" className="w-24 h-24 object-cover rounded-md mb-2" />}
       {errors.photo && <p className="text-red-500 text-sm">{errors.photo}</p>}
 
-      
+      {/* Name */}
       <label className="block mt-4 font-medium">Name</label>
       <input
         type="text"
@@ -97,7 +104,7 @@ function Step1({ formData, setFormData, nextStep }) {
       />
       {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
 
-      
+      {/* Age */}
       <label className="block mt-4 font-medium">Age</label>
       <input
         type="number"
@@ -108,7 +115,7 @@ function Step1({ formData, setFormData, nextStep }) {
       />
       {errors.age && <p className="text-red-500 text-sm">{errors.age}</p>}
 
-      
+      {/* Gender */}
       <label className="block mt-4 font-medium">Gender</label>
       <select
         name="gender"
@@ -123,7 +130,7 @@ function Step1({ formData, setFormData, nextStep }) {
       </select>
       {errors.gender && <p className="text-red-500 text-sm">{errors.gender}</p>}
 
-      
+      {/* Custom Gender */}
       {formData.gender === "Other" && (
         <>
           <label className="block mt-4 font-medium">Please specify</label>
@@ -138,7 +145,7 @@ function Step1({ formData, setFormData, nextStep }) {
         </>
       )}
 
-      
+      {/* Username */}
       <label className="block mt-4 font-medium">Username</label>
       <input
         type="text"
@@ -146,10 +153,11 @@ function Step1({ formData, setFormData, nextStep }) {
         onChange={handleUsername}
         className="w-full border px-3 py-2 rounded mt-1"
       />
+      {checkingUsername && <p className="text-blue-500 text-sm">Checking...</p>}
       {usernameCheck && <p className="text-sm">{usernameCheck}</p>}
       {errors.username && <p className="text-red-500 text-sm">{errors.username}</p>}
 
-      
+      {/* Password */}
       <label className="block mt-4 font-medium">Password</label>
       <input
         type="password"
@@ -160,7 +168,7 @@ function Step1({ formData, setFormData, nextStep }) {
       />
       {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
 
-     
+      {/* Change Password */}
       {!changePassword && (
         <button
           type="button"
@@ -185,6 +193,7 @@ function Step1({ formData, setFormData, nextStep }) {
         </>
       )}
 
+      {/* Next Button */}
       <div className="mt-6 flex justify-end">
         <button
           onClick={handleNext}

@@ -6,9 +6,11 @@ const User = require('./model');
 
 const app = express();
 app.use(cors({
-  origin: ['https://mern-project-eight-psi.vercel.app/'], // Replace with your actual frontend domain
+  origin: ['https://mern-project-eight-psi.vercel.app/'],
+  methods: ['GET', 'POST'],
   credentials: true
 }));
+
 
 app.use(express.json({ limit: '20mb' }));
 
