@@ -6,7 +6,7 @@ const User = require('./model');
 
 const app = express();
 app.use(cors({
-  origin: 'https://mern-project-eight-psi.vercel.app/',
+  origin: 'https://mern-project-eight-psi.vercel.app',
   credentials: true
 }));
 
