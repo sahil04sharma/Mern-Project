@@ -7,7 +7,8 @@ function Step3({ formData, setFormData, prevStep, nextStep }) {
 
   // Fetch countries on load
   useEffect(() => {
-    fetch('http://localhost:10000/countries')
+   fetch(`${import.meta.env.VITE_BACKEND_URL}/countries`)
+
       .then(res => res.json())
       .then(data => setCountries(data));
   }, []);
@@ -15,7 +16,8 @@ function Step3({ formData, setFormData, prevStep, nextStep }) {
   // Update states and reset address fields when country changes
   useEffect(() => {
     if (formData.country) {
-      fetch(`http://localhost:10000/states/${formData.country}`)
+     fetch(`${import.meta.env.VITE_BACKEND_URL}/states/${formData.country}`)
+
         .then(res => res.json())
         .then(data => setStates(data));
     } else {
@@ -35,7 +37,8 @@ function Step3({ formData, setFormData, prevStep, nextStep }) {
   // Update cities when state changes
   useEffect(() => {
     if (formData.country && formData.state) {
-      fetch(`http://localhost:10000/cities/${formData.country}/${formData.state}`)
+      fetch(`${import.meta.env.VITE_BACKEND_URL}/cities/${formData.country}/${formData.state}`)
+
         .then(res => res.json())
         .then(data => setCities(data));
 

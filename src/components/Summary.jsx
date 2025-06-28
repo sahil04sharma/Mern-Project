@@ -5,31 +5,33 @@ function Summary({ formData, setFormData, prevStep }) {
   const [newsletter, setNewsletter] = useState(formData.newsletter ?? true)
 
   const handleSubmit = () => {
-    const finalData = {
-      ...formData,
-      subscriptionPlan,
-      newsletter,
-    }
+  const finalData = {
+    ...formData,
+    subscriptionPlan,
+    newsletter,
+  };
 
-    fetch('http://localhost:10000/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(finalData)
+  fetch(`${import.meta.env.VITE_BACKEND_URL}/submit`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(finalData)
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        alert("Profile submitted successfully!");
+        console.log("Saved:", finalData);
+      } else {
+        alert("Failed to submit.");
+      }
     })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          alert(" Profile submitted successfully!")
-          console.log("Saved:", finalData)
-        } else {
-          alert("Failed to submit.")
-        }
-      })
-      .catch(err => {
-        console.error("Submit error:", err)
-        alert("Server error.")
-      })
-  }
+    .catch(err => {
+      console.error("Submit error:", err);
+      alert("Server error.");
+    });
+};
+
+  
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
