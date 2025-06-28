@@ -30,9 +30,8 @@ function Step1({ formData, setFormData, nextStep }) {
     if (val.length >= 4 && val.length <= 20 && !val.includes(" ")) {
       try {
         setCheckingUsername(true);
-        const res = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/check-username?username=${val}`
-        );
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/check-username?username=${val}`)
+        ;
         const data = await res.json();
         setUsernameCheck(data.available ? "Available ✅" : "Taken ❌");
       } catch (err) {
