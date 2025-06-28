@@ -5,7 +5,11 @@ const mongoose = require('mongoose');
 const User = require('./model');
 
 const app = express();
-app.use(cors()); // WARNING: use this only in development
+app.use(cors({
+  origin: 'https://mern-project-eight-psi.vercel.app/',
+  credentials: true
+}));
+
 
 
 
