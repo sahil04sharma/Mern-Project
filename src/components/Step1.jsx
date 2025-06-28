@@ -27,7 +27,7 @@ function Step1({ formData, setFormData, nextStep }) {
 
     if (val.length >= 4 && val.length <= 20 && !val.includes(" ")) {
       try {
-        const res = await fetch(`http://localhost:5000/check-username?username=${val}`);
+        const res = await fetch(`http://localhost:10000/check-username?username=${val}`);
         const data = await res.json();
         setUsernameCheck(data.available ? "Available" : "Taken");
       } catch (err) {

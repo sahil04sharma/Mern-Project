@@ -11,7 +11,7 @@ function Summary({ formData, setFormData, prevStep }) {
       newsletter,
     }
 
-    fetch('http://localhost:5000/submit', {
+    fetch('http://localhost:10000/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(finalData)

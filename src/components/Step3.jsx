@@ -7,7 +7,7 @@ function Step3({ formData, setFormData, prevStep, nextStep }) {
 
   // Fetch countries on load
   useEffect(() => {
-    fetch('http://localhost:5000/countries')
+    fetch('http://localhost:10000/countries')
       .then(res => res.json())
       .then(data => setCountries(data));
   }, []);
@@ -15,7 +15,7 @@ function Step3({ formData, setFormData, prevStep, nextStep }) {
   // Update states and reset address fields when country changes
   useEffect(() => {
     if (formData.country) {
-      fetch(`http://localhost:5000/states/${formData.country}`)
+      fetch(`http://localhost:10000/states/${formData.country}`)
         .then(res => res.json())
         .then(data => setStates(data));
     } else {
@@ -35,7 +35,7 @@ function Step3({ formData, setFormData, prevStep, nextStep }) {
   // Update cities when state changes
   useEffect(() => {
     if (formData.country && formData.state) {
-      fetch(`http://localhost:5000/cities/${formData.country}/${formData.state}`)
+      fetch(`http://localhost:10000/cities/${formData.country}/${formData.state}`)
         .then(res => res.json())
         .then(data => setCities(data));
 
@@ -54,7 +54,7 @@ function Step3({ formData, setFormData, prevStep, nextStep }) {
     const { dob, address1, country, state, city } = formData;
 
     if (!dob || !address1 || !country || !state || !city) {
-      alert("❌ Please complete all fields including Date of Birth and Address");
+      alert(" Please complete all fields including Date of Birth and Address");
       return;
     }
 
@@ -62,7 +62,7 @@ function Step3({ formData, setFormData, prevStep, nextStep }) {
     const today = new Date();
 
     if (selectedDate > today) {
-      alert("❌ Date of Birth cannot be in the future");
+      alert(" Date of Birth cannot be in the future");
       return;
     }
 
