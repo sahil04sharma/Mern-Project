@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -10,7 +11,7 @@ app.use(cors());
 app.use(express.json({ limit: '20mb' }));
 
 
-mongoose.connect('mongodb+srv://interactsahil5232:eAI2OzVXpTQFU1Tu@cluster0.ceftvuk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log("Mongo error", err));
 
